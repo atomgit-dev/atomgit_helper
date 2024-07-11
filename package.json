@@ -27,8 +27,34 @@
       {
         "command": "git-emoji-atomgit.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "git-emoji-atomgit.gitEmoji",
+        "title": "git emoji: emoji list",
+        "icon": {
+          "dark": "resources/git-emoji.svg",
+          "light": "resources/git-emoji_light.svg"
+        }
+      },
+      {
+        "command": "git-emoji-atomgit.formatSwitch",
+        "title": "git emoji: format switch",
+        "icon": {
+          "dark": "resources/git-emoji.svg",
+          "light": "resources/git-emoji_light.svg"
+        }
       }
-    ]
+    ],
+    "menus": {
+      "scm/title": [
+        {
+          "when": "scmProvider == git",
+          "command": "git-emoji-atomgit.gitEmoji",
+          "alt": "git-emoji-atomgit.formatSwitch",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "pnpm run compile",
