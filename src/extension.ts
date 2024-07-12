@@ -102,7 +102,7 @@ export function activate(context: vscode.ExtensionContext) {
       items.push(key);
     }
     vscode.window
-      .showQuickPick(items)
+      .showQuickPick(items, {placeHolder: "Select Prefix Method"})
       .then((res) => {
         context.globalState.update("displayMethod", res);
       })
