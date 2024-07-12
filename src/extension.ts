@@ -42,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
     'Congratulations, your extension "git-emoji-atomgit" is now active!'
   );
 
-  const showEmojiPickList = (uri: any) => {
+  const handleEmojiPick = (uri: any) => {
     // 需要安装了 git 插件
     const git = getGitExtension();
     if (!git) {
@@ -68,10 +68,11 @@ export function activate(context: vscode.ExtensionContext) {
             });
             if (selectedRepository) {
               addCommitPrefix(selectedRepository, selected.emoji);
+              vscode.commands.executeCommand('workbench.scm.focus');
             }
           } else {
-            // 如果有多个 git 仓库打开了，全部执行添加前缀；
-            for (let repo of git.repositories) {
+            // 如果有多个 git 仓库打开了，全部执行添加前缀
+            for (const repo of git.repositories) {
               addCommitPrefix(repo, selected.emoji);
             }
           }
@@ -86,7 +87,7 @@ export function activate(context: vscode.ExtensionContext) {
   const disposable = vscode.commands.registerCommand(
     "git-emoji-atomgit.gitEmoji",
     (uri?) => {
-      showEmojiPickList(uri);
+      handleEmojiPick(uri);
     }
   );
 
@@ -107,7 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
         context.globalState.update("displayMethod", res);
       })
       .then(() => {
-        showEmojiPickList(uri);
+        handleEmojiPick(uri);
       });
   });
 
