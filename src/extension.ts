@@ -3,6 +3,7 @@
 import * as vscode from "vscode";
 import { displayMethod, emojiList } from "./emoji";
 import type { GitExtension, Repository } from "./git";
+import { MessageHelper } from './message-helper';
 
 /**
  * 获取 Git Extension 实例
@@ -97,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.window.showInformationMessage("Hello World from git-emoji-atomgit!");
   });
 
-  vscode.commands.registerCommand("git-emoji-atomgit.formatSwitch", (uri?) => {
+  const formatSwitch = vscode.commands.registerCommand("git-emoji-atomgit.formatSwitch", (uri?) => {
     const items = [];
     for (const key in displayMethod) {
       items.push(key);
@@ -113,6 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
   });
 
   context.subscriptions.push(disposable);
+  context.subscriptions.push(formatSwitch);
 }
 
 // This method is called when your extension is deactivated
