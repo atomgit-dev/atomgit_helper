@@ -1,220 +1,217 @@
 interface IEmoji {
-  readonly emoji: any;
-  readonly entity?: any;
-  readonly code: any;
-  readonly description: any;
-  readonly name: any;
+  readonly emoji: string;
+  readonly shortname: string;
+  readonly unicode: string;
+  readonly htmlEntity: string;
+  readonly gitType: string;
+  readonly detail: string;
 }
 
 const emojiList: IEmoji[] = [
   {
     emoji: "🎉",
-    entity: "&#x1f3a8;",
-    code: ":tada:",
-    description: "desc初次提交/初始化项目😬",
-    name: "name庆祝",
+    shortname: ":tada:",
+    unicode: "1f389",
+    htmlEntity: "&#127881;",
+    gitType: "init",
+    detail: "初始化项目",
   },
   {
     emoji: "✨",
-    entity: "&#x1f525;",
-    code: ":fire:",
-    description: "引入新功能🙃",
-    name: "火花",
+    shortname: ":sparkles:",
+    unicode: "2728",
+    htmlEntity: "&#10024;",
+    gitType: "feat",
+    detail: "新增功能",
   },
   {
     emoji: "🐛",
-    entity: "&#x1f41b;",
-    code: ":bug:",
-    description: "修复 bug😭",
-    name: "bug",
-  },
-  {
-    emoji: "🔀",
-    code: ":twisted_rightwards_arrows:",
-    description: "Merge 分支🤣",
-    name: "merge",
-  },
-  {
-    emoji: "🎨",
-    entity: "&#x2728;",
-    code: ":sparkles:",
-    description: "改进代码结构/代码格式😍",
-    name: "调色板",
-  },
-  {
-    emoji: "⚡️",
-    code: ":zap:",
-    description: "提高性能/优化🤪",
-    name: "性能",
-  },
-  {
-    emoji: "📝",
-    code: ":memo:",
-    description: "添加/更新文档😁",
-    name: "文档",
-  },
-  {
-    emoji: "🔨",
-    code: ":hammer:",
-    description: "重构代码🙄",
-    name: "重构",
-  },
-  {
-    emoji: "✅",
-    code: ":white_check_mark:",
-    description: "增加测试😋",
-    name: "测试",
-  },
-  {
-    emoji: "🚧",
-    code: ":construction:",
-    description: "缓存进行中的工作🤒",
-    name: "进行中",
-  },
-  {
-    emoji: "🔥",
-    code: ":fire:",
-    description: "删除文件😔",
-    name: "删除",
-  },
-  {
-    emoji: "🚚",
-    code: ":truck:",
-    description: "移动文件或重命名🙃",
-    name: "移动文件",
-  },
-  {
-    emoji: "🔖",
-    code: ":bookmark:",
-    description: "发布版本/添加标签😃",
-    name: "Tag",
-  },
-
-  {
-    emoji: "✅",
-    entity: "&#x1f680;",
-    code: ":rocket:",
-    description: "增加测试代码🤑",
-    name: "测试",
-  },
-  {
-    emoji: "🚀",
-    entity: "&#127881;",
-    code: ":tada:",
-    description: "发布新版本😄",
-    name: "发布",
-  },
-  {
-    emoji: "🔧",
-    entity: "&#x1f527;",
-    code: ":wrench:",
-    description: "修改配置文件🙄",
-    name: "配置",
-  },
-  {
-    emoji: "⬆️",
-    code: ":arrow_up:",
-    description: "升级依赖",
-    name: "升级",
-  },
-  {
-    emoji: "⬇️",
-    code: ":arrow_down:",
-    description: "降级依赖",
-    name: "降级",
-  },
-  {
-    emoji: "💄",
-    entity: "&#x1f525;",
-    code: ":lipstick:",
-    description: "更新 UI 和样式文件",
-    name: "口红",
-  },
-  {
-    emoji: "🌐",
-    entity: "&#127760;",
-    code: ":globe_with_meridians:🤒",
-    description: "多语言/国际化",
-    name: "国际化",
+    shortname: ":bug:",
+    unicode: "1f41b",
+    htmlEntity: "&#128027;",
+    gitType: "fix",
+    detail: "修复 bug",
   },
   {
     emoji: "🚑",
-    entity: "&#128657;",
-    code: ":ambulance:",
-    description: "添加重要补丁😔",
-    name: "急救车",
+    shortname: ":ambulance:",
+    unicode: "1f691",
+    htmlEntity: "&#128657;",
+    gitType: "hotfix",
+    detail: "线上 hotfix",
+  },
+  {
+    emoji: "⚡",
+    shortname: ":zap:",
+    unicode: "26a1",
+    htmlEntity: "&#9889;",
+    gitType: "perf",
+    detail: "优化相关内容，比如提升性能、体验、算法等",
+  },
+  {
+    emoji: "⏪",
+    shortname: ":rewind:",
+    unicode: "23ea",
+    htmlEntity: "&#9194;",
+    gitType: "revert",
+    detail: "回滚到上一个版本",
+  },
+  {
+    emoji: "🔀",
+    shortname: ":twisted_rightwards_arrows:",
+    unicode: "1f500",
+    htmlEntity: "&#128256;",
+    gitType: "merge",
+    detail: "代码合并",
+  },
+  {
+    emoji: "📝",
+    shortname: ":memo:",
+    unicode: "1F4DD",
+    htmlEntity: "&#128221;",
+    gitType: "docs",
+    detail: "仅修改文档，比如 README, CHANGELOG 等等",
+  },
+  {
+    emoji: "✅",
+    shortname: ":white_check_mark:",
+    unicode: "2705",
+    htmlEntity: "&#9989;",
+    gitType: "test",
+    detail: "增加/修改测试用例，包括单元测试、集成测试等",
+  },
+  {
+    emoji: "💄",
+    shortname: ":lipstick:",
+    unicode: "1f484",
+    htmlEntity: "&#128132;",
+    gitType: "style",
+    detail: "修改了空行、缩进格式、引用包排序等等（不改变代码逻辑）",
+  },
+  {
+    emoji: "♻️",
+    shortname: ":recycling_symbol:",
+    unicode: "267B FE0F",
+    htmlEntity: "&#x267B;&#xFE0F;",
+    gitType: "refactor",
+    detail: "代码重构（没有新功能或者 bug 修复）",
+  },
+  {
+    emoji: "🔥",
+    shortname: ":fire:",
+    unicode: "1f525",
+    htmlEntity: "&#128293;",
+    gitType: "remove",
+    detail: "移除代码或文件",
+  },
+  {
+    emoji: "🔧",
+    shortname: ":wrench:",
+    unicode: "1f527",
+    htmlEntity: "&#128295;",
+    gitType: "chore",
+    detail: "改变构建流程、或者增加依赖库、工具等",
   },
   {
     emoji: "📦",
-    entity: "&#x1f4dd;",
-    code: ":pencil:",
-    description: "添加新文件/引入新功能😋",
-    name: "添加",
+    shortname: ":package:",
+    unicode: "1f4e6",
+    htmlEntity: "&#128230;",
+    gitType: "package",
+    detail: "更新依赖",
   },
   {
-    emoji: "🤔",
-    code: ":ideas:",
-    description: "思考 & 计划🥺",
-    name: "思考",
+    emoji: "💡",
+    shortname: ":bulb:",
+    unicode: "1f4a1",
+    htmlEntity: "&#128161;",
+    gitType: "idea",
+    detail: "idea，新的想法",
+  },
+  {
+    emoji: "🚧",
+    shortname: ":construction:",
+    unicode: "1f6a7",
+    htmlEntity: "&#128679;",
+    gitType: "construction",
+    detail: "工作进行中",
+  },
+  {
+    emoji: "🌐",
+    shortname: ":globe_with_meridians:",
+    unicode: "1f310",
+    htmlEntity: "&#127760;",
+    gitType: "i18n",
+    detail: "国际化或本地化",
+  },
+  {
+    emoji: "🚀",
+    shortname: ":rocket:",
+    unicode: "1f680",
+    htmlEntity: "&#128640;",
+    gitType: "version",
+    detail: "新版本",
+  },
+  {
+    emoji: "🔖",
+    shortname: ":bookmark:",
+    unicode: "1f516",
+    htmlEntity: "&#128278;",
+    gitType: "tag",
+    detail: "标签-tag",
+  },
+  {
+    emoji: "♿",
+    shortname: ":wheelchair:",
+    unicode: "267f",
+    htmlEntity: "&#9855;",
+    gitType: "a11y",
+    detail: "可访问性",
+  },
+  {
+    emoji: "📄",
+    shortname: ":page_facing_up:",
+    unicode: "1f4c4",
+    htmlEntity: "&#128196;",
+    gitType: "license",
+    detail: "更新 license",
   },
 ];
 
-type EmojiType = "emoji" | "code" | "both";
+type PrefixType = "emoji" | "shortname" | "emoji_with_type";
 
-const useEmoji = (emoji: IEmoji, type: EmojiType) => {
-  const generateLabel = () => `${emoji.emoji} ${emoji.description}`;
-  const generateDescription = () => `[${emoji.name}]`;
+const getCommitPrefix = (emojiItem: IEmoji, type: PrefixType) => {
+  const { emoji, shortname, gitType, detail } = emojiItem;
 
-  let emojiField: string;
+  let commitPrefix = "";
   switch (type) {
     case "emoji":
-      emojiField = emoji.emoji + " ";
+      commitPrefix = emoji + " ";
       break;
-    case "code":
-      emojiField = emoji.code + " ";
+    case "shortname":
+      commitPrefix = shortname + " ";
       break;
-    case "both":
-      emojiField = `${emoji.emoji} ${emoji.code}: `;
+    case "emoji_with_type":
+      commitPrefix = `${emoji} ${gitType}: `;
       break;
     default:
-      emojiField = emoji.emoji + " "; // 默认使用 emoji
+      commitPrefix = emoji + " "; // 默认使用 emoji
   }
 
   return {
-    label: generateLabel(),
-    code: emoji.code,
-    emoji: emojiField,
-    description: generateDescription(),
-    detail: 'iiii detail',
+    label: type === "emoji_with_type" ? `${emoji} ${gitType} ` : commitPrefix,
+    description: type === "emoji_with_type" ? "" : gitType,
+    emoji: commitPrefix,
+    detail,
   };
 };
 
-const use_emoji = (emoji: IEmoji) => ({
-  label: `${emoji.emoji} ${emoji.description}`,
-  code: emoji.code,
-  emoji: emoji.emoji + " ",
-  description: "[" + emoji.name + "]",
-});
-
-const use_label = (emoji: IEmoji) => ({
-  label: `${emoji.emoji} ${emoji.description}`,
-  code: emoji.code,
-  emoji: emoji.code + " ",
-  description: "[" + emoji.name + "]",
-});
-
-const use_both = (emoji: IEmoji) => ({
-  label: `${emoji.emoji} ${emoji.description}`,
-  code: emoji.code,
-  emoji: `${emoji.emoji} ${emoji.code}: `,
-  description: `[${emoji.name}]`,
-});
-
 const displayMethod = {
-  default: (emoji: IEmoji) => useEmoji(emoji, "emoji"),
-  "use label": (emoji: IEmoji) => useEmoji(emoji, "code"), // 注意这里我们使用 'code' 作为 'use label' 的替代，因为原 use_label 是使用 code 的
-  "use emoji": (emoji: IEmoji) => useEmoji(emoji, "emoji"),
-  "use both": (emoji: IEmoji) => useEmoji(emoji, "both"),
+  default: (emoji: IEmoji) => getCommitPrefix(emoji, "emoji"),
+  "use emoji": (emoji: IEmoji) => getCommitPrefix(emoji, "emoji"),
+  "use shortname": (emoji: IEmoji) => getCommitPrefix(emoji, "shortname"),
+  "use emoji_with_type": (emoji: IEmoji) =>
+    getCommitPrefix(emoji, "emoji_with_type"),
 };
 
 export { displayMethod, emojiList };
