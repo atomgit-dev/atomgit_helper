@@ -50,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
       return;
     }
     // 根据用户设置，选择不同的 emoji 列表展示方式
-    const method_key = context.globalState.get("displayMethod", "default");
+    const method_key = context.globalState.get("displayMethod", "use emoji");
     let items = emojiList.map(displayMethod[method_key]);
 
     // 显示选项列表，提示用户选择

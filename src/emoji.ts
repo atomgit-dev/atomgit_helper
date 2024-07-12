@@ -207,7 +207,6 @@ const getCommitPrefix = (emojiItem: IEmoji, type: PrefixType) => {
 };
 
 const displayMethod = {
-  default: (emoji: IEmoji) => getCommitPrefix(emoji, "emoji"),
   "use emoji": (emoji: IEmoji) => getCommitPrefix(emoji, "emoji"),
   "use shortname": (emoji: IEmoji) => getCommitPrefix(emoji, "shortname"),
   "use emoji_with_type": (emoji: IEmoji) =>

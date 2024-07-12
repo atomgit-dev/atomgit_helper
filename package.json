@@ -32,16 +32,16 @@
         "command": "git-emoji-atomgit.gitEmoji",
         "title": "git emoji: emoji list",
         "icon": {
-          "dark": "resources/git-emoji.svg",
-          "light": "resources/git-emoji_light.svg"
+          "dark": "resources/add_emoji_dark.svg",
+          "light": "resources/add_emoji_light.svg"
         }
       },
       {
         "command": "git-emoji-atomgit.formatSwitch",
         "title": "git emoji: format switch",
         "icon": {
-          "dark": "resources/git-emoji.svg",
-          "light": "resources/git-emoji_light.svg"
+          "dark": "resources/switch_dark.svg",
+          "light": "resources/switch_light_svg"
         }
       }
     ],
