@@ -3,7 +3,7 @@
 import * as vscode from "vscode";
 import { displayMethod, emojiList } from "./emoji";
 import type { GitExtension, Repository } from "./git";
-import { MessageHelper } from './message-helper';
+import { MessageHelper } from "./message-helper";
 
 /**
  * 获取 Git Extension 实例
@@ -34,14 +34,16 @@ function commitPrefixQuickPickOptions(type = "") {
   };
 }
 
+let messageHelper: MessageHelper | null = null;
+
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
-  console.log(
-    'Congratulations, your extension "git-emoji-atomgit" is now active!'
-  );
+  // console.log(
+  //   'Congratulations, your extension is now active!'
+  // );
 
   const handleEmojiPick = (uri: any) => {
     // 需要安装了 git 插件
@@ -62,14 +64,13 @@ export function activate(context: vscode.ExtensionContext) {
           // 这条命令，是打开 git 插件的 scm 视图(source control)
           vscode.commands.executeCommand("workbench.view.scm");
           if (uri) {
-            //如果有多个 repo ，寻找当前的 repo 进行填充
             let selectedRepository = git.repositories.find((repository) => {
               const uriRoot = uri._rootUri ? uri._rootUri : uri.rootUri;
               return repository.rootUri.path === uriRoot?.path;
             });
             if (selectedRepository) {
               addCommitPrefix(selectedRepository, selected.emoji);
-              vscode.commands.executeCommand('workbench.scm.focus');
+              vscode.commands.executeCommand("workbench.scm.focus");
             }
           } else {
             // 如果有多个 git 仓库打开了，全部执行添加前缀
@@ -81,40 +82,96 @@ export function activate(context: vscode.ExtensionContext) {
       });
   };
 
+  // 监听配置变化
+  const watchConfig = vscode.workspace.onDidChangeConfiguration((event) => {
+    if (
+      [
+        "atomgit-notice-status",
+        "atomgit-access-token",
+        "atomgit-notice-timeSpan",
+      ].some((str) => event.affectsConfiguration(str))
+    ) {
+      updateMessageHelper();
+    }
+  });
+
+  async function updateMessageHelper() {
+    const atomgitNoticeStatus = vscode.workspace
+      .getConfiguration()
+      .get("atomgit-notice-status") as boolean;
+
+    if (messageHelper) {
+      messageHelper.stopListen();
+    }
+
+    if (atomgitNoticeStatus) {
+      messageHelper = new MessageHelper();
+      messageHelper.startListen();
+      // vscode.window.showInformationMessage("已启用 AtomGit 消息助手");
+    } else {
+      const result = await vscode.window.showInformationMessage(
+        "AtomGit 消息助手已关闭，如需开启请点击开启按钮",
+        "开启"
+      );
+      if (result === "开启") {
+        // 打开插件配置页
+        const extensionId = "atomgit.git-emoji-atomgit";
+        vscode.commands.executeCommand(
+          "workbench.action.openSettings",
+          "@ext:" + extensionId
+        );
+        vscode.window.showInformationMessage("请勾选是否开启AtomGit 消息助手");
+      }
+    }
+  }
+
+  updateMessageHelper();
+
   // The command has been defined in the package.json file
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
+  const fetchNotice = vscode.commands.registerCommand(
+    "git-emoji-atomgit.fetchNotice",
+    () => {
+      updateMessageHelper();
+    }
+  );
 
-  const disposable = vscode.commands.registerCommand(
+  const noticeLink = vscode.commands.registerCommand(
+    "git-emoji-atomgit.noticeLink",
+    () => {
+      vscode.env.openExternal(
+        vscode.Uri.parse("https://atomgit.com/-/profile/notice/announce")
+      );
+    }
+  );
+
+  const gitEmoji = vscode.commands.registerCommand(
     "git-emoji-atomgit.gitEmoji",
     (uri?) => {
       handleEmojiPick(uri);
     }
   );
 
-  vscode.commands.registerCommand("git-emoji-atomgit.helloWorld", () => {
-    // The code you place here will be executed every time your command is executed
-    // Display a message box to the user
-    vscode.window.showInformationMessage("Hello World from git-emoji-atomgit!");
-  });
-
-  const formatSwitch = vscode.commands.registerCommand("git-emoji-atomgit.formatSwitch", (uri?) => {
-    const items = [];
-    for (const key in displayMethod) {
-      items.push(key);
+  const emojiFormatSwitch = vscode.commands.registerCommand(
+    "git-emoji-atomgit.emojiFormatSwitch",
+    (uri?) => {
+      const items = [];
+      for (const key in displayMethod) {
+        items.push(key);
+      }
+      vscode.window
+        .showQuickPick(items, { placeHolder: "Select Prefix Method" })
+        .then((res) => {
+          context.globalState.update("displayMethod", res);
+        })
+        .then(() => {
+          handleEmojiPick(uri);
+        });
     }
-    vscode.window
-      .showQuickPick(items, {placeHolder: "Select Prefix Method"})
-      .then((res) => {
-        context.globalState.update("displayMethod", res);
-      })
-      .then(() => {
-        handleEmojiPick(uri);
-      });
-  });
+  );
 
-  context.subscriptions.push(disposable);
-  context.subscriptions.push(formatSwitch);
+context.subscriptions.push(...[watchConfig, fetchNotice, noticeLink, gitEmoji, emojiFormatSwitch]);
 }
 
 // This method is called when your extension is deactivated

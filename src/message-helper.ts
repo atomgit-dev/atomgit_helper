@@ -1,98 +1,70 @@
-import { StatusBarAlignment, Uri, env, window, workspace } from 'vscode';
-import { Message, Service, baseUrl } from './service';
+import { StatusBarAlignment, window, workspace } from "vscode";
+import { Service } from "./service";
 
 export class MessageHelper {
-  private statusBarItem = window.createStatusBarItem(StatusBarAlignment.Left, 10);
-  private timerStatusBarItem = window.createStatusBarItem(StatusBarAlignment.Left, 10);
-  private timeSpan: number;
-  private texts: string[] = [];
-  private count: number = 0;
-  private service: Service | null = null;
-  private hasShow = false;
+  private atomgitNoticeBarItem = window.createStatusBarItem(
+    StatusBarAlignment.Left,
+    10
+  );
 
-  private countTimer: NodeJS.Timeout | null = null;
+  // 消息获取间隔
+  private timeSpan: number;
+
+  // axios 实例
+  private service: Service | null = null;
+
+  // fetchNotice 定时器
   private messageTimer: NodeJS.Timeout | null = null;
 
-  private messages: Message[] = [];
-
   constructor() {
-    const cookie = workspace.getConfiguration().get('juejin-cookie') as string;
-    this.timeSpan = (workspace.getConfiguration().get('juejin-refresh-time-span') as number) * 1000;
+    const token = workspace
+      .getConfiguration()
+      .get("atomgit-access-token") as string;
+    // 默认 5 分钟获取一次
+    this.timeSpan =
+      (workspace.getConfiguration().get("atomgit-notice-timeSpan") as number) *
+        60 *
+        1000 || 5 * 60 * 1000;
 
-    if (!cookie) {
-      window.showErrorMessage('请先配置cookie！');
+    if (!token) {
+      window.showErrorMessage("请先配置 access token！");
+      // TODO:  增加 accesstoken 说明和引导
       return;
     }
 
-    this.service = new Service(cookie);
+    this.service = new Service(token);
   }
 
   public startListen() {
-
-    this.countTimer = globalThis.setInterval(async () => {
-      if (this.count === 0) {
-        this.count = this.timeSpan;
-      } else {
-        this.count -= 1000;
-      }
-      this.timerStatusBarItem.text = `下次刷新：${this.count / 1000}`;
-    }, 1000);
-
-    this.listenMessage();
+    this.fetchNotice();
 
     this.messageTimer = globalThis.setInterval(() => {
-      this.listenMessage();
-    }, 5000);
-
+      this.fetchNotice();
+    }, this.timeSpan);
   }
 
   public stopListen() {
-    if (this.countTimer) {
-      globalThis.clearInterval(this.countTimer);
-    }
-
     if (this.messageTimer) {
       globalThis.clearInterval(this.messageTimer);
     }
-
-    this.statusBarItem.dispose();
-    this.timerStatusBarItem.dispose();
+    this.atomgitNoticeBarItem.dispose();
   }
 
-  private async listenMessage() {
+  private async fetchNotice() {
     try {
-      const messages = await this.service?.getMessages() || [];
-      this.messages.push(...messages);
-      if (!this.hasShow) {
-        this.showMessage();
-      }
-    } catch {
+      const noticeCount = (await this.service?.getMessages()) || 0;
+      this.atomgitNoticeBarItem.text = `AtomGit消息：${
+        noticeCount > 99 ? "99+" : noticeCount
+      }`;
+      this.atomgitNoticeBarItem.command = "git-emoji-atomgit.noticeLink";
+      this.atomgitNoticeBarItem.tooltip = "点击查看 AtomGit 消息列表";
+      this.atomgitNoticeBarItem.show();
+    } catch (err) {
+      console.error(err);
+      window.showWarningMessage("消息获取失败，请检查 access token");
       if (this.messageTimer) {
         globalThis.clearInterval(this.messageTimer);
       }
-      window.showWarningMessage('请检查cookie是否配置错误');
     }
   }
-
-  private async showMessage() {
-    const curMessage = this.messages.pop();
-
-    if (!curMessage) {
-      this.hasShow = false;
-      return;
-    }
-
-    const { message, url, count } = curMessage;
-
-    this.hasShow = true;
-
-    const result = await window.showErrorMessage(`掘金消息助手：您有${count}${message}`, ...['查看', '关闭']);
-    if (result === '查看') {
-      await env.openExternal(Uri.parse(`${baseUrl}${url}`));
-    }
-
-    this.hasShow = false;
-    this.showMessage();
-  }
-
 }

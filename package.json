@@ -25,14 +25,12 @@
     "emoji",
     "atomgit"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
-      {
-        "command": "git-emoji-atomgit.helloWorld",
-        "title": "git emoji: Hello World"
-      },
       {
         "command": "git-emoji-atomgit.gitEmoji",
         "title": "git emoji: emoji list",
@@ -48,6 +46,14 @@
           "dark": "resources/switch_dark.svg",
           "light": "resources/switch_light_svg"
         }
+      },
+      {
+        "command": "git-emoji-atomgit.fetchNotice",
+        "title": "git-emoji-atomgit: fetch notice"
+      },
+      {
+        "command": "git-emoji-atomgit.noticeLink",
+        "title": "git-emoji-atomgit: notice link"
       }
     ],
     "menus": {
@@ -59,7 +65,33 @@
           "group": "navigation"
         }
       ]
-    }
+    },
+    "configuration": [
+      {
+        "title": "git-emoji-atomgit",
+        "properties": {
+          "atomgit-notice-status": {
+            "title": "是否开启 AtomGit 消息助手",
+            "type": "boolean",
+            "description": "是否开启 AtomGit 消息助手",
+            "default": true
+          },
+          "atomgit-access-token": {
+            "title": "atomgit access token",
+            "type": "string",
+            "description": "atomgit token",
+            "default": ""
+          },
+          "atomgit-notice-timeSpan": {
+            "title": "AtomGit 消息刷新时间间隔（分钟）",
+            "type": "number",
+            "minimum": 1,
+            "default": 5,
+            "description": "AtomGit 消息刷新时间间隔，最小为1分钟"
+          }
+        }
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "pnpm run compile",
