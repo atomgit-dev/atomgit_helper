@@ -68,26 +68,23 @@
     },
     "configuration": [
       {
-        "title": "git-emoji-atomgit",
+        "title": "GitEmojiAtomGit",
         "properties": {
-          "atomgit-notice-status": {
-            "title": "是否开启 AtomGit 消息助手",
+          "GitEmojiAtomGit.setting.noticeToggle": {
             "type": "boolean",
             "description": "是否开启 AtomGit 消息助手",
             "default": true
           },
-          "atomgit-access-token": {
-            "title": "atomgit access token",
+          "GitEmojiAtomGit.setting.AccessToken": {
             "type": "string",
-            "description": "atomgit token",
+            "markdownDescription": " 配置参考 [AtomGit 个人访问令牌](https://docs.atomgit.com/user/pats)",
             "default": ""
           },
-          "atomgit-notice-timeSpan": {
-            "title": "AtomGit 消息刷新时间间隔（分钟）",
+          "GitEmojiAtomGit.setting.noticeInterval": {
             "type": "number",
             "minimum": 1,
             "default": 5,
-            "description": "AtomGit 消息刷新时间间隔，最小为1分钟"
+            "description": "AtomGit 消息刷新时间间隔，单位为分钟，最小为1分钟"
           }
         }
       }

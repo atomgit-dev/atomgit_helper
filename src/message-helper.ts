@@ -19,10 +19,10 @@ export class MessageHelper {
   constructor() {
     const token = workspace
       .getConfiguration()
-      .get("atomgit-access-token") as string;
+      .get("GitEmojiAtomGit.setting.AccessToken") as string;
     // 默认 5 分钟获取一次
     this.timeSpan =
-      (workspace.getConfiguration().get("atomgit-notice-timeSpan") as number) *
+      (workspace.getConfiguration().get("GitEmojiAtomGit.setting.noticeInterval") as number) *
         60 *
         1000 || 5 * 60 * 1000;
 

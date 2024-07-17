@@ -86,9 +86,9 @@ export function activate(context: vscode.ExtensionContext) {
   const watchConfig = vscode.workspace.onDidChangeConfiguration((event) => {
     if (
       [
-        "atomgit-notice-status",
-        "atomgit-access-token",
-        "atomgit-notice-timeSpan",
+        "GitEmojiAtomGit.setting.noticeToggle",
+        "GitEmojiAtomGit.setting.AccessToken",
+        "GitEmojiAtomGit.setting.noticeInterval",
       ].some((str) => event.affectsConfiguration(str))
     ) {
       updateMessageHelper();
@@ -98,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
   async function updateMessageHelper() {
     const atomgitNoticeStatus = vscode.workspace
       .getConfiguration()
-      .get("atomgit-notice-status") as boolean;
+      .get("GitEmojiAtomGit.setting.noticeToggle") as boolean;
 
     if (messageHelper) {
       messageHelper.stopListen();
