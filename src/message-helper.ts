@@ -1,4 +1,4 @@
-import { StatusBarAlignment, window, workspace } from "vscode";
+import { StatusBarAlignment, env, window, workspace } from "vscode";
 import { Service } from "./service";
 
 export class MessageHelper {
@@ -19,16 +19,15 @@ export class MessageHelper {
   constructor() {
     const token = workspace
       .getConfiguration()
-      .get("GitEmojiAtomGit.setting.AccessToken") as string;
+      .get("AtomGitHelper.setting.AccessToken") as string;
     // 默认 5 分钟获取一次
     this.timeSpan =
-      (workspace.getConfiguration().get("GitEmojiAtomGit.setting.noticeInterval") as number) *
+      (workspace.getConfiguration().get("AtomGitHelper.setting.noticeInterval") as number) *
         60 *
         1000 || 5 * 60 * 1000;
 
     if (!token) {
       window.showErrorMessage("请先配置 access token！");
-      // TODO:  增加 accesstoken 说明和引导
       return;
     }
 
@@ -56,7 +55,7 @@ export class MessageHelper {
       this.atomgitNoticeBarItem.text = `AtomGit消息：${
         noticeCount > 99 ? "99+" : noticeCount
       }`;
-      this.atomgitNoticeBarItem.command = "git-emoji-atomgit.noticeLink";
+      this.atomgitNoticeBarItem.command = "atomgit-helper.noticeLink";
       this.atomgitNoticeBarItem.tooltip = "点击查看 AtomGit 消息列表";
       this.atomgitNoticeBarItem.show();
     } catch (err) {

@@ -1,3 +1,3 @@
-# git-emoji-atomgit README
+# atomgit-helper README
 
 to be finished

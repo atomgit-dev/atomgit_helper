@@ -86,9 +86,9 @@ export function activate(context: vscode.ExtensionContext) {
   const watchConfig = vscode.workspace.onDidChangeConfiguration((event) => {
     if (
       [
-        "GitEmojiAtomGit.setting.noticeToggle",
-        "GitEmojiAtomGit.setting.AccessToken",
-        "GitEmojiAtomGit.setting.noticeInterval",
+        "AtomGitHelper.setting.noticeToggle",
+        "AtomGitHelper.setting.AccessToken",
+        "AtomGitHelper.setting.noticeInterval",
       ].some((str) => event.affectsConfiguration(str))
     ) {
       updateMessageHelper();
@@ -98,7 +98,7 @@ export function activate(context: vscode.ExtensionContext) {
   async function updateMessageHelper() {
     const atomgitNoticeStatus = vscode.workspace
       .getConfiguration()
-      .get("GitEmojiAtomGit.setting.noticeToggle") as boolean;
+      .get("AtomGitHelper.setting.noticeToggle") as boolean;
 
     if (messageHelper) {
       messageHelper.stopListen();
@@ -115,7 +115,7 @@ export function activate(context: vscode.ExtensionContext) {
       );
       if (result === "开启") {
         // 打开插件配置页
-        const extensionId = "atomgit.git-emoji-atomgit";
+        const extensionId = "atomgit.atomgit-helper";
         vscode.commands.executeCommand(
           "workbench.action.openSettings",
           "@ext:" + extensionId
@@ -131,14 +131,14 @@ export function activate(context: vscode.ExtensionContext) {
   // Now provide the implementation of the command with registerCommand
   // The commandId parameter must match the command field in package.json
   const fetchNotice = vscode.commands.registerCommand(
-    "git-emoji-atomgit.fetchNotice",
+    "atomgit-helper.fetchNotice",
     () => {
       updateMessageHelper();
     }
   );
 
   const noticeLink = vscode.commands.registerCommand(
-    "git-emoji-atomgit.noticeLink",
+    "atomgit-helper.noticeLink",
     () => {
       vscode.env.openExternal(
         vscode.Uri.parse("https://atomgit.com/-/profile/notice/announce")
@@ -147,14 +147,14 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   const gitEmoji = vscode.commands.registerCommand(
-    "git-emoji-atomgit.gitEmoji",
+    "atomgit-helper.gitEmoji",
     (uri?) => {
       handleEmojiPick(uri);
     }
   );
 
   const emojiFormatSwitch = vscode.commands.registerCommand(
-    "git-emoji-atomgit.emojiFormatSwitch",
+    "atomgit-helper.formatSwitch",
     (uri?) => {
       const items = [];
       for (const key in displayMethod) {

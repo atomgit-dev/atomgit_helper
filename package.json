@@ -1,7 +1,7 @@
 {
-  "name": "git-emoji-atomgit",
-  "displayName": "git-emoji-atomgit",
-  "description": "git-emoji-atomgit 插件",
+  "name": "atomgit-helper",
+  "displayName": "atomgit-helper",
+  "description": "atomgit-helper 插件",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.91.0"
@@ -32,55 +32,55 @@
   "contributes": {
     "commands": [
       {
-        "command": "git-emoji-atomgit.gitEmoji",
-        "title": "git emoji: emoji list",
+        "command": "atomgit-helper.gitEmoji",
+        "title": "atomgit-helper: emoji list",
         "icon": {
           "dark": "resources/add_emoji_dark.svg",
           "light": "resources/add_emoji_light.svg"
         }
       },
       {
-        "command": "git-emoji-atomgit.formatSwitch",
-        "title": "git emoji: format switch",
+        "command": "atomgit-helper.formatSwitch",
+        "title": "atomgit-helper: emoji format",
         "icon": {
           "dark": "resources/switch_dark.svg",
           "light": "resources/switch_light_svg"
         }
       },
       {
-        "command": "git-emoji-atomgit.fetchNotice",
-        "title": "git-emoji-atomgit: fetch notice"
+        "command": "atomgit-helper.fetchNotice",
+        "title": "atomgit-helper: notice fetch"
       },
       {
-        "command": "git-emoji-atomgit.noticeLink",
-        "title": "git-emoji-atomgit: notice link"
+        "command": "atomgit-helper.noticeLink",
+        "title": "atomgit-helper: notice link"
       }
     ],
     "menus": {
       "scm/title": [
         {
           "when": "scmProvider == git",
-          "command": "git-emoji-atomgit.gitEmoji",
-          "alt": "git-emoji-atomgit.formatSwitch",
+          "command": "atomgit-helper.gitEmoji",
+          "alt": "atomgit-helper.formatSwitch",
           "group": "navigation"
         }
       ]
     },
     "configuration": [
       {
-        "title": "GitEmojiAtomGit",
+        "title": "AtomGitHelper",
         "properties": {
-          "GitEmojiAtomGit.setting.noticeToggle": {
+          "AtomGitHelper.setting.noticeToggle": {
             "type": "boolean",
             "description": "是否开启 AtomGit 消息助手",
             "default": true
           },
-          "GitEmojiAtomGit.setting.AccessToken": {
+          "AtomGitHelper.setting.AccessToken": {
             "type": "string",
             "markdownDescription": " 配置参考 [AtomGit 个人访问令牌](https://docs.atomgit.com/user/pats)",
             "default": ""
           },
-          "GitEmojiAtomGit.setting.noticeInterval": {
+          "AtomGitHelper.setting.noticeInterval": {
             "type": "number",
             "minimum": 1,
             "default": 5,
