@@ -249,7 +249,7 @@
   dependencies:
     undici-types "~5.26.4"
 
-"@types/vscode@^1.91.0":
+"@types/vscode@^1.74.0":
   version "1.91.0"
   resolved "https://registry.npmmirror.com/@types/vscode/-/vscode-1.91.0.tgz#badaf9dfca14b08f1ad32fe197558d8d1702c3c9"
   integrity sha512-PgPr+bUODjG3y+ozWUCyzttqR9EHny9sPAfJagddQjDwdtf66y2sDKJMnFZRuzBA2YtBGASqJGPil8VDUPvO6A==
