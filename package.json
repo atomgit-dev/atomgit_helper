@@ -2,7 +2,7 @@
   "name": "atomgit-helper",
   "displayName": "atomgit-helper",
   "description": "atomgit-helper 插件",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.91.0"
   },
@@ -10,10 +10,6 @@
     "name": "atomgit"
   },
   "publisher": "atomgit",
-  "repository": {
-    "type": "git",
-    "url": "https://atomgit.com/nevins_repo/git-emoji-atomgit"
-  },
   "license": "MIT",
   "categories": [
     "Other"
@@ -23,7 +19,8 @@
   "keywords": [
     "git",
     "emoji",
-    "atomgit"
+    "atomgit",
+    "atomgit-helper"
   ],
   "activationEvents": [
     "onStartupFinished"
