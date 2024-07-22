@@ -59,7 +59,7 @@ export class MessageHelper {
   private async fetchNotice() {
     try {
       const noticeCount = (await this.service?.getMessages()) || 0;
-      this.atomgitNoticeBarItem.text = `AtomGit消息：${
+      this.atomgitNoticeBarItem.text = `AtomGit：${
         noticeCount > 99 ? "99+" : noticeCount
       }`;
       this.atomgitNoticeBarItem.command = "atomgit-helper.noticeLink";

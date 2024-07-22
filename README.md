@@ -17,6 +17,8 @@ push 到仓库后，commit 效果如下：
 
 ![commit-emoji](resources/demo/commit_emoji.png)
 
+在 emoji 列表中，可以根据 commit type、commit 描述进行筛选，快速选中自己需要的 emoji。
+
 目前提供的 emoji 对应的 commit types，是在 [Angular 团队提交规范](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type)的基础上，进行了一些扩展。
 
 ### 在 commit 中使用 emoji
