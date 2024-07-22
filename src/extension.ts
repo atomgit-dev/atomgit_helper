@@ -141,7 +141,7 @@ export function activate(context: vscode.ExtensionContext) {
     "atomgit-helper.noticeLink",
     () => {
       vscode.env.openExternal(
-        vscode.Uri.parse("https://atomgit.com/-/profile/notice/announce")
+        vscode.Uri.parse("https://atomgit.com/-/profile/notice/infos")
       );
     }
   );
