@@ -19,6 +19,18 @@ push 到仓库后，commit 效果如下：
 
 目前提供的 emoji 对应的 commit types，是在 [Angular 团队提交规范](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type)的基础上，进行了一些扩展。
 
+### 在 commit 中使用 emoji
+
+可以按如下格式在 commit message 中使用 emoji：
+
+```bash
+<intention> [scope?][:?] <message>
+```
+
+- `intention`: An emoji from the list.
+- `scope`: An optional string that adds contextual information for the scope of the change.
+- `message`: A brief explanation of the change.
+
 ### 模式切换
 
 插件提供了三种 commit emoji prefix 模式：
