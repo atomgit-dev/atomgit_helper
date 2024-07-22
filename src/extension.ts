@@ -120,7 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
           "workbench.action.openSettings",
           "@ext:" + extensionId
         );
-        vscode.window.showInformationMessage("请勾选是否开启AtomGit 消息助手");
+        vscode.window.showInformationMessage(`如需开启，请勾选"是否开启AtomGit 消息助手"`);
       }
     }
   }

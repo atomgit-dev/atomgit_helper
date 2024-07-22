@@ -7,6 +7,8 @@ export class MessageHelper {
     10
   );
 
+  private hasToken: boolean = false;
+
   // 消息获取间隔
   private timeSpan: number;
 
@@ -26,17 +28,22 @@ export class MessageHelper {
         60 *
         1000 || 5 * 60 * 1000;
 
-    if (!token) {
-      window.showErrorMessage("请先配置 access token！");
+      if (!token) {
+      window.showErrorMessage("请填写 AccessToken 来获取 AtomGit 消息");
       return;
     }
+
+    this.hasToken = true;
 
     this.service = new Service(token);
   }
 
   public startListen() {
-    this.fetchNotice();
+    if(!this.hasToken){
+      return;
+    }
 
+    this.fetchNotice();
     this.messageTimer = globalThis.setInterval(() => {
       this.fetchNotice();
     }, this.timeSpan);
@@ -60,7 +67,7 @@ export class MessageHelper {
       this.atomgitNoticeBarItem.show();
     } catch (err) {
       console.error(err);
-      window.showWarningMessage("消息获取失败，请检查 access token");
+      window.showWarningMessage("消息获取失败，请检查 Access Token 是否正确");
       if (this.messageTimer) {
         globalThis.clearInterval(this.messageTimer);
       }
