@@ -9,14 +9,6 @@ interface IEmoji {
 
 const emojiList: IEmoji[] = [
   {
-    emoji: "🎉",
-    shortname: ":tada:",
-    unicode: "1f389",
-    htmlEntity: "&#127881;",
-    gitType: "init",
-    detail: "初始化项目",
-  },
-  {
     emoji: "✨",
     shortname: ":sparkles:",
     unicode: "2728",
@@ -49,6 +41,14 @@ const emojiList: IEmoji[] = [
     detail: "优化相关内容，比如提升性能、体验、算法等",
   },
   {
+    emoji: "📝",
+    shortname: ":memo:",
+    unicode: "1F4DD",
+    htmlEntity: "&#128221;",
+    gitType: "docs",
+    detail: "仅修改文档，比如 README, CHANGELOG 等等",
+  },
+  {
     emoji: "⏪",
     shortname: ":rewind:",
     unicode: "23ea",
@@ -63,14 +63,6 @@ const emojiList: IEmoji[] = [
     htmlEntity: "&#128256;",
     gitType: "merge",
     detail: "代码合并",
-  },
-  {
-    emoji: "📝",
-    shortname: ":memo:",
-    unicode: "1F4DD",
-    htmlEntity: "&#128221;",
-    gitType: "docs",
-    detail: "仅修改文档，比如 README, CHANGELOG 等等",
   },
   {
     emoji: "✅",
@@ -97,12 +89,12 @@ const emojiList: IEmoji[] = [
     detail: "代码重构（没有新功能或者 bug 修复）",
   },
   {
-    emoji: "🔥",
-    shortname: ":fire:",
-    unicode: "1f525",
-    htmlEntity: "&#128293;",
+    emoji: "🗑️",
+    shortname: ":wastebasket:",
+    unicode: "1F5D1 FE0F",
+    htmlEntity: "&#x1F5D1;&#xFE0F;",
     gitType: "remove",
-    detail: "移除代码或文件",
+    detail: "代码、文件废弃或移除",
   },
   {
     emoji: "🔧",
@@ -111,6 +103,14 @@ const emojiList: IEmoji[] = [
     htmlEntity: "&#128295;",
     gitType: "chore",
     detail: "改变构建流程、或者增加依赖库、工具等",
+  },
+  {
+    emoji: "🎉",
+    shortname: ":tada:",
+    unicode: "1f389",
+    htmlEntity: "&#127881;",
+    gitType: "init",
+    detail: "初始化项目",
   },
   {
     emoji: "📦",
@@ -150,7 +150,7 @@ const emojiList: IEmoji[] = [
     unicode: "1f680",
     htmlEntity: "&#128640;",
     gitType: "version",
-    detail: "新版本",
+    detail: "发布新版本",
   },
   {
     emoji: "🔖",
