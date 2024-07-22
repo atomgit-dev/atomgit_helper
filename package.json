@@ -9,10 +9,10 @@
   "author": {
     "name": "atomgit"
   },
-  "publisher": "atomgit",
+  "publisher": "nevins",
   "repository": {
     "type": "git",
-    "url": "https://atomgit.com/nevins_repo/git-emoji-atomgit"
+    "url": "https://github.com/CL-nevins/atomgit_helper.git"
   },
   "license": "MIT",
   "categories": [
