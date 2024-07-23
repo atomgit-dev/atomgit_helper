@@ -1,6 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
+import { extensionId } from './constant';
 import { displayMethod, emojiList } from "./emoji";
 import type { GitExtension, Repository } from "./git";
 import { MessageHelper } from "./message-helper";
@@ -115,7 +116,6 @@ export function activate(context: vscode.ExtensionContext) {
       );
       if (result === "开启") {
         // 打开插件配置页
-        const extensionId = "atomgit.atomgit-helper";
         vscode.commands.executeCommand(
           "workbench.action.openSettings",
           "@ext:" + extensionId

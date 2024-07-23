@@ -1,4 +1,5 @@
-import { StatusBarAlignment, env, window, workspace } from "vscode";
+import { StatusBarAlignment, commands, window, workspace } from "vscode";
+import { defaultTimeSpan, extensionId } from './constant';
 import { Service } from "./service";
 
 export class MessageHelper {
@@ -26,20 +27,28 @@ export class MessageHelper {
     this.timeSpan =
       (workspace.getConfiguration().get("AtomGitHelper.setting.noticeInterval") as number) *
         60 *
-        1000 || 5 * 60 * 1000;
+        1000 || defaultTimeSpan * 60 * 1000;
 
-      if (!token) {
-      window.showErrorMessage("请填写 AccessToken 来获取 AtomGit 消息");
-      return;
-    }
+      if (!token) {return;}
 
     this.hasToken = true;
 
     this.service = new Service(token);
   }
 
-  public startListen() {
+  public async startListen() {
     if(!this.hasToken){
+      this.atomgitNoticeBarItem.text = "未配置Token";
+      this.atomgitNoticeBarItem.show();
+
+      const result = await window.showErrorMessage("请填写 AccessToken 来获取 AtomGit 消息","配置");
+      if (result === "配置") {
+        // 打开插件配置页
+        commands.executeCommand(
+          "workbench.action.openSettings",
+          "@ext:" + extensionId
+        );
+      }
       return;
     }
 
