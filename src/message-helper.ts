@@ -22,7 +22,7 @@ export class MessageHelper {
   constructor() {
     const token = workspace
       .getConfiguration()
-      .get("AtomGitHelper.setting.AccessToken") as string;
+      .get("AtomGitHelper.setting.PersonalAccessToken") as string;
     // 默认 5 分钟获取一次
     this.timeSpan =
       (workspace.getConfiguration().get("AtomGitHelper.setting.noticeInterval") as number) *
@@ -46,7 +46,7 @@ export class MessageHelper {
       this.atomgitNoticeBarItem.tooltip = tooltip;
       this.atomgitNoticeBarItem.show();
 
-      const result = await window.showErrorMessage("请填写 AccessToken 来获取 AtomGit 消息","配置");
+      const result = await window.showErrorMessage("请填写 Personal Access Token 来获取 AtomGit 消息","配置");
       if (result === "配置") {
         // 打开插件配置页
         commands.executeCommand(
@@ -81,7 +81,7 @@ export class MessageHelper {
       this.atomgitNoticeBarItem.show();
     } catch (err) {
       console.error(err);
-      window.showWarningMessage("消息获取失败，请检查 Access Token 是否正确");
+      window.showWarningMessage("消息获取失败，请检查 Personal Access Token 是否正确");
       if (this.messageTimer) {
         globalThis.clearInterval(this.messageTimer);
       }

@@ -1,29 +1,31 @@
-# atomgit-helper 插件
+English | [简体中文](./README_CN.md)
 
-## 功能介绍
+# atomgit-helper extension
 
-atomgit-helper 是 [AtomGit](https://atomgit.com) 提供的一个 git 辅助插件，目前拥有的功能：
+## Features
+
+Atomgit helper is a VSCode extension for git supporter, provided by [Atomgit]（ <https://atomgit.com> ）, it has the following features at present:
 
 - [git commit emoji](#git-commit-emoji)
-- [AtomGit 消息获取](#atomgit-message)
+- [AtomGit Message](#atomgit-message)
 
 ## git commit emoji
 
-在 git commit message 中，添加 emoji，凸显此次 commit 的内容，也可用于规范提交记录：
+In the git commit message, add an emoji to highlight the content of this commit, it can also be used to standardize the commit record:
 
 ![features](resources/demo/atomgit-helper-demo.gif)
 
-push 到仓库后，commit 效果如下：
+After pushing to the repository, the commit effect is as follows:
 
 ![commit-emoji](resources/demo/commit_emoji.png)
 
-在 emoji 列表中，可以根据 commit type、commit 描述进行筛选，快速选中自己需要的 emoji。
+In the emoji list, you can filter based on the commit type or commit description to quickly select the emoji you need.
 
-目前提供的 emoji 对应的 commit types，是在 [Angular 团队提交规范](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type)的基础上，进行了一些扩展。
+The commit types corresponding to the emojis currently are based on the [Angular team specification](https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#type), and i add some more emojis to this.
 
-### 在 commit 中使用 emoji
+### Use emojis in commit
 
-可以按如下格式在 commit message 中使用 emoji：
+You can use emojis in commit messages in the following format:
 
 ```bash
 <intention> [scope?][:?] <message>
@@ -33,47 +35,65 @@ push 到仓库后，commit 效果如下：
 - `scope`: An optional string that adds contextual information for the scope of the change.
 - `message`: A brief explanation of the change.
 
-### 模式切换
+### Mode switch
 
-插件提供了三种 commit emoji prefix 模式：
+This extension offered three modes for commit emoji prefix ：
 
-| 模式        | 示例    |  is Default  |
+| mode        | demo    |  is Default  |
 | --------   | :----:  | :----: |
 | emoji      | `✨ some features` |   true    |
 | shortname  | `:sparkles: some features` |   false   |
 | emoji_with_type        | `✨ feat: some features` |   false   |
 
-可在 UI 界面，按住 Alt 键，点击对应图标，进行 mode 切换，也可以在命令面板中，输入`emoji format`，进行 mode 切换。
+You can switch modes by holding down the Alt key and click on the corresponding icon in the UI interface, or by entering 'emoji format' in the command panel.
 
-> 命令面板呼出：
-> windows 用户 ：Ctrl+Shift+P
+> command panel ：
+> windows ：Ctrl+Shift+P
 > Mac：Command + Shift + P
 
 ## AtomGit Message
 
-插件会定期获取 AtomGit 未读消息，在底部状态栏进行展示：
+The extension will periodically retrieve AtomGit unread messages and display them in the bottom status bar:
 
 ![message_bar](resources/demo/message_bar.png)
 
-可点击状态栏，跳转至消息页面。
+You can click on the status bar to jump to the message page.
 
-### 配置
+### Settings
 
-你可以在插件设置中（Setting —— 搜索 AtomGitHelper），配置如下项：
+You can configure the following options in the extension settings (Setting - Search AtomGitHelper):
 
-- 是否启用消息获取
-- Access Token：未配置 Access Token 或者 token scope 范围错误时，无法获取到消息状态； 具体配置可参考 [AtomGit 个人访问令牌](https://docs.atomgit.com/user/pats)
+- enable/disable message retrieval
+- Personal Access Token：if Personal Access Token is not configured or has a wrong scope, the extension is unable to get message status; visit [AtomGit PAT](https://docs.atomgit.com/user/pats) for more information.
 
-> 生成 Access Token 时，作用范围(scope) 需包含 'user'
+> When generating a Personal Access Token, the scope should include 'user'
 
-- 消息获取频率
+- Message acquisition frequency
 
 ![message_setting](resources/demo/message_setting.png)
 
-## 下载
+## Download
 
-在 VSCode Extensions 中搜索 `atomgit-helper` 即可找到此插件。
+Search for 'atomgit helper' in VSCode Extensions to find this plugin.
+
+## 开发
+
+Recommended node version >= 16
+
+- Install global dependencies
+
+```bash
+npm install -g yo generator-code yarn
+```
+
+- Install project dependencies
+
+```bash
+yarn install
+```
+
+- Debugger：Press `F5` to start debugger
 
 ## issues
 
-使用中遇到问题可以在这里提问。
+You can issue us [here](https://github.com/atomgit-dev/atomgit_helper/issues).

@@ -1,4 +1,4 @@
-const extensionId = "nevins.atomgit-helper";
+const extensionId = "atomgitofficial.atomgit-helper";
 
 const defaultTimeSpan = 5;
 

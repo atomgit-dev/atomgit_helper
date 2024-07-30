@@ -88,7 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
     if (
       [
         "AtomGitHelper.setting.noticeToggle",
-        "AtomGitHelper.setting.AccessToken",
+        "AtomGitHelper.setting.PersonalAccessToken",
         "AtomGitHelper.setting.noticeInterval",
       ].some((str) => event.affectsConfiguration(str))
     ) {
