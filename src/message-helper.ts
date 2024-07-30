@@ -1,4 +1,4 @@
-import { StatusBarAlignment, commands, window, workspace } from "vscode";
+import { MarkdownString, StatusBarAlignment, commands, window, workspace } from "vscode";
 import { defaultTimeSpan, extensionId } from './constant';
 import { Service } from "./service";
 
@@ -39,6 +39,11 @@ export class MessageHelper {
   public async startListen() {
     if(!this.hasToken){
       this.atomgitNoticeBarItem.text = "未配置Token";
+      const tooltip = new MarkdownString('', true);
+      tooltip.supportHtml = true;
+      tooltip.isTrusted = true;
+      tooltip.appendMarkdown(`[点击](command:workbench.action.openSettings?%22@ext:${extensionId}%22 "配置个人访问令牌")前往配置`);
+      this.atomgitNoticeBarItem.tooltip = tooltip;
       this.atomgitNoticeBarItem.show();
 
       const result = await window.showErrorMessage("请填写 AccessToken 来获取 AtomGit 消息","配置");
