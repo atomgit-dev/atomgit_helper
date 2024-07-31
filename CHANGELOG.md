@@ -17,3 +17,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 ### Fixed
 
 - AccessToken 文案，修改为个人访问令牌（Personal Access Token）。
+
+## [1.1.2] - 2024-07-31
+
+### Added
+
+- 增加私信数量获取。

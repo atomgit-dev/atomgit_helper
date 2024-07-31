@@ -1,14 +1,9 @@
 import axios, { AxiosInstance } from "axios";
-
-// AtomGit OpenAPI 文档详见 https://docs.atomgit.com/openAPI/api_versioned/remind-page-list
-const ATOMGIT_API_BASE_URL = "https://api.atomgit.com";
-
-const MAX_RETRY = 3;
+import { API_MAX_RETRY, ATOMGIT_API_BASE_URL } from './constant';
 
 export class Service {
   private request: AxiosInstance;
-  private infoFailCount = 0;
-  private messageFailCount = 0;
+  private notifyFailCount = 0;
 
   constructor(token: string) {
     this.request = axios.create({
@@ -20,61 +15,48 @@ export class Service {
     });
   }
 
-  // 获取未读通知
-  public async getInfos(): Promise<number | undefined> {
+  // AtomGit OpenAPI 文档详见 https://docs.atomgit.com/openAPI/api_versioned/remind-page-list
+  private getInfos() {
     const url = "/notifications/threads";
-
-    try {
-      const data = await this.request.get(url, {
-        params: {
-          unread: true,
-          page: 1,
-        },
-      });
-      const {
-        data: { total = 0 },
-      } = data;
-      this.infoFailCount = 0;
-      return total;
-    } catch (error) {
-      this.infoFailCount++;
-      const {
-        response: {
-          data: { error: errMsg, error_description },
-        },
-      } = error as any;
-      const errMessage = error_description || errMsg;
-      console.error("request error: ", errMessage);
-      // 失败三次就不再刷新
-      if (this.infoFailCount === MAX_RETRY) {
-        throw new Error("AtomGit 通知获取失败");
-      }
-    }
+    return this.request.get(url, {
+      params: {
+        unread: true,
+        page: 1,
+      },
+    });
   }
 
-  // 获取未读私信
-  public async getPrivateMessages(): Promise<number | undefined> {
+  private getPrivateMessages() {
     const url = "/notifications/messages";
-
     const now = new Date();
     const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
     const since = threeDaysAgo.toISOString();
+    return this.request.get(url, {
+      params: {
+        unread: true,
+        page: 1,
+        since,
+      },
+    });
+  }
 
+  public async getAll(): Promise<number | undefined> {
     try {
-      const data = await this.request.get(url, {
-        params: {
-          unread: true,
-          since,
-          page: 1,
-        },
-      });
+      const [info, message] = await Promise.all([
+        this.getInfos(),
+        this.getPrivateMessages(),
+      ]);
+
       const {
-        data: { total = 0 },
-      } = data;
-      this.messageFailCount = 0;
-      return total;
+        data: { total: infoCount = 0 },
+      } = info;
+      const {
+        data: { total: messageCount = 0 },
+      } = message;
+      this.notifyFailCount = 0;
+      return infoCount + messageCount;
     } catch (error) {
-      this.messageFailCount++;
+      this.notifyFailCount++;
       const {
         response: {
           data: { error: errMsg, error_description },
@@ -83,9 +65,10 @@ export class Service {
       const errMessage = error_description || errMsg;
       console.error("request error: ", errMessage);
       // 失败三次就不再刷新
-      if (this.messageFailCount === MAX_RETRY) {
-        throw new Error("AtomGit 私信获取失败");
+      if (this.notifyFailCount === API_MAX_RETRY) {
+        throw new Error("AtomGit 通知获取失败");
       }
+      return undefined;
     }
   }
 }
