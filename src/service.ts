@@ -7,6 +7,7 @@ const MAX_RETRY = 3;
 
 export class Service {
   private request: AxiosInstance;
+  private infoFailCount = 0;
   private messageFailCount = 0;
 
   constructor(token: string) {
@@ -19,7 +20,8 @@ export class Service {
     });
   }
 
-  public async getMessages(): Promise<number | undefined> {
+  // 获取未读通知
+  public async getInfos(): Promise<number | undefined> {
     const url = "/notifications/threads";
 
     try {
@@ -32,9 +34,45 @@ export class Service {
       const {
         data: { total = 0 },
       } = data;
-      const messageCount = total;
+      this.infoFailCount = 0;
+      return total;
+    } catch (error) {
+      this.infoFailCount++;
+      const {
+        response: {
+          data: { error: errMsg, error_description },
+        },
+      } = error as any;
+      const errMessage = error_description || errMsg;
+      console.error("request error: ", errMessage);
+      // 失败三次就不再刷新
+      if (this.infoFailCount === MAX_RETRY) {
+        throw new Error("AtomGit 通知获取失败");
+      }
+    }
+  }
+
+  // 获取未读私信
+  public async getPrivateMessages(): Promise<number | undefined> {
+    const url = "/notifications/messages";
+
+    const now = new Date();
+    const threeDaysAgo = new Date(now.getTime() - 3 * 24 * 60 * 60 * 1000);
+    const since = threeDaysAgo.toISOString();
+
+    try {
+      const data = await this.request.get(url, {
+        params: {
+          unread: true,
+          since,
+          page: 1,
+        },
+      });
+      const {
+        data: { total = 0 },
+      } = data;
       this.messageFailCount = 0;
-      return messageCount;
+      return total;
     } catch (error) {
       this.messageFailCount++;
       const {
@@ -46,7 +84,7 @@ export class Service {
       console.error("request error: ", errMessage);
       // 失败三次就不再刷新
       if (this.messageFailCount === MAX_RETRY) {
-        throw new Error("AtomGit 消息 OpenAPI 重复调用失败");
+        throw new Error("AtomGit 私信获取失败");
       }
     }
   }

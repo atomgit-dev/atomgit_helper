@@ -16,8 +16,8 @@ export class MessageHelper {
   // axios 实例
   private service: Service | null = null;
 
-  // fetchNotice 定时器
-  private messageTimer: NodeJS.Timeout | null = null;
+  // fetchInfo 定时器
+  private infoTimer: NodeJS.Timeout | null = null;
 
   constructor() {
     const token = workspace
@@ -57,24 +57,24 @@ export class MessageHelper {
       return;
     }
 
-    this.fetchNotice();
-    this.messageTimer = globalThis.setInterval(() => {
-      this.fetchNotice();
+    this.fetchInfo();
+    this.infoTimer = globalThis.setInterval(() => {
+      this.fetchInfo();
     }, this.timeSpan);
   }
 
   public stopListen() {
-    if (this.messageTimer) {
-      globalThis.clearInterval(this.messageTimer);
+    if (this.infoTimer) {
+      globalThis.clearInterval(this.infoTimer);
     }
     this.atomgitNoticeBarItem.dispose();
   }
 
-  private async fetchNotice() {
+  private async fetchInfo() {
     try {
-      const noticeCount = (await this.service?.getMessages()) || 0;
+      const infoCount = (await this.service?.getInfos()) || 0;
       this.atomgitNoticeBarItem.text = `AtomGit：${
-        noticeCount > 99 ? "99+" : noticeCount
+        infoCount > 99 ? "99+" : infoCount
       }`;
       this.atomgitNoticeBarItem.command = "atomgit-helper.noticeLink";
       this.atomgitNoticeBarItem.tooltip = "点击查看 AtomGit 消息列表";
@@ -82,9 +82,10 @@ export class MessageHelper {
     } catch (err) {
       console.error(err);
       window.showWarningMessage("消息获取失败，请检查 Personal Access Token 是否正确");
-      if (this.messageTimer) {
-        globalThis.clearInterval(this.messageTimer);
+      if (this.infoTimer) {
+        globalThis.clearInterval(this.infoTimer);
       }
     }
   }
+
 }
