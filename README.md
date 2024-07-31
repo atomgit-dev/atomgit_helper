@@ -4,7 +4,7 @@ English | [简体中文](./README_CN.md)
 
 ## Features
 
-Atomgit helper is a VSCode extension for git supporter, provided by [Atomgit]（ <https://atomgit.com> ）, it has the following features at present:
+Atomgit helper is a VSCode extension for git supporter, provided by [AtomGit](https://atomgit.com) , it has the following features at present:
 
 - [git commit emoji](#git-commit-emoji)
 - [AtomGit Message](#atomgit-message)
