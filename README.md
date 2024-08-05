@@ -76,7 +76,7 @@ You can configure the following options in the extension settings (Setting - Sea
 
 Search for 'atomgit helper' in VSCode Extensions to find this plugin.
 
-## 开发
+## Develop
 
 Recommended node version >= 16
 
